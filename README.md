@@ -4,7 +4,7 @@
 
 MyAPES public site is delivered as a **static HTML/CSS/JS website served from `public/`**.
 
-- Primary web root: `C:\Users\bmurp\PhpstormProjects\myapes.me.uk\public`
+- Primary web root: `public/` (served locally from `C:\laragon\www\myapes-website\public`)
 - Public routes are static files (`index.html` and folder `index.html` pages).
 - `.htaccess` in `public/` keeps clean URLs and fallback 404 behavior for Apache.
 - No private application runtime is required for the public site in this repository snapshot.
@@ -21,27 +21,29 @@ The expected deployment target is the existing Cloudron LAMP pattern:
 
 ## Local preview and validation workflow
 
-Run from repository root:
+Laragon is the only supported local set-up. Its Apache serves `public/` with the same `.htaccess` rules as Cloudron.
 
 ```powershell
-php -S 127.0.0.1:8080 -t public
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\laragon-setup.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\preview.ps1
 ```
 
-Then open:
+The first links `C:\laragon\www\myapes-website` to your clone so Laragon serves `http://myapes-website.test`. The second pulls the latest changes and starts Browsersync on `http://localhost:3101/`, which reloads on save. Then check:
 
-- `http://127.0.0.1:8080/`
-- `http://127.0.0.1:8080/support/`
-- `http://127.0.0.1:8080/sitemap.xml`
-- `http://127.0.0.1:8080/does-not-exist` (should resolve to branded 404)
+- `http://localhost:3101/`
+- `http://localhost:3101/support/`
+- `http://localhost:3101/sitemap.xml`
+- `http://localhost:3101/does-not-exist` (should resolve to the branded 404)
 
-### Codex/browser checks
+### Quick checks
 
-For UI/route checks, validate the above paths in the Codex browser before handoff and record any blocker.
-
-### Quick smoke checks
-
+- `php scripts/check-site.php` (also run by CI)
 - `rg -n "https://beta\.apes\.me\.uk" public` (should return no results after domain migration)
 - `php -l public/template/layout.php`
+
+### How work ships
+
+Once per milestone, by the milestone's version: see `CONTRIBUTING.md` and `.cursor/rules/version-shipping.mdc`. After the ship gate, the release tag is deployed with `deploy/cloudron/deploy.ps1 -Tag vX.Y.Z`.
 
 ## JetBrains setup notes
 

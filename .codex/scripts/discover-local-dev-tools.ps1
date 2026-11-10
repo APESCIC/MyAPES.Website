@@ -47,8 +47,6 @@ $tools = @(
     @{ Name = 'composer'; Arguments = @('--version') },
     @{ Name = 'mysql'; Arguments = @('--version') },
     @{ Name = 'mariadb'; Arguments = @('--version') },
-    @{ Name = 'docker'; Arguments = @('--version') },
-    @{ Name = 'docker-compose'; Arguments = @('--version') },
     @{ Name = 'pwsh'; Arguments = @('--version') },
     @{ Name = 'powershell'; Arguments = @('-NoProfile', '-Command', '$PSVersionTable.PSVersion.ToString()') }
 )
@@ -65,13 +63,11 @@ $results = foreach ($tool in $tools) {
 $results | Format-Table -AutoSize
 
 $laragonPaths = @('C:\laragon', 'C:\Laragon') | Where-Object { Test-Path -LiteralPath $_ }
-$xamppPaths = @('C:\xampp', 'C:\XAMPP') | Where-Object { Test-Path -LiteralPath $_ }
 
 Write-Host ''
 Write-Host 'Local environment hints'
 [pscustomobject]@{
     Laragon = if ($laragonPaths) { $laragonPaths -join '; ' } else { 'not found at common Windows paths' }
-    XAMPP   = if ($xamppPaths) { $xamppPaths -join '; ' } else { 'not found at common Windows paths' }
 } | Format-List
 
 Write-Host 'Discovery is read-only. Missing tools are blockers unless the user approves installation.'

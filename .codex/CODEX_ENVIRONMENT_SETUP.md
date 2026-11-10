@@ -88,9 +88,9 @@ For APES CIC Cloudron LAMP work, assume:
 - Redis only where approved
 - Apache `.htaccess`
 
-On Windows, use Laragon as the fallback local testing and debugging path for
-APES Cloudron LAMP, PHP, and MySQL work only after tool discovery and
-repository guidance review.
+Laragon is the only supported local set-up for this site. Run
+`scripts\preview.ps1` for the live preview gate (see
+`.cursor/rules/laragon-local-dev.mdc` and `docs/laragon/profile.md`).
 
 ## Template Repository Note
 

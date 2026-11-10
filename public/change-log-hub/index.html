@@ -76,13 +76,13 @@
                 compliance changes and internal platform maintenance.
               </p>
               <div class="badge-row">
-                <span class="pill">Current version v3.2.2b</span>
+                <span class="pill">Current version v3.2.3</span>
                 <span class="pill is-warm">Patch beta update</span>
-                <span class="pill">Public contact details</span>
+                <span class="pill">Repository standards</span>
               </div>
               <div class="hero-actions">
                 <a class="button button-secondary" href="#release-list">Expand all releases</a>
-                <a class="button button-secondary" href="#release-v322b">View current release</a>
+                <a class="button button-secondary" href="#release-v323">View current release</a>
               </div>
             </section>
 
@@ -148,10 +148,55 @@
 
               <div id="release-list" class="release-list">
 <article
-                  id="release-v322b"
+                  id="release-v323"
                   class="release-item"
                   data-release-item
                   data-current="true"
+                  data-version="v3.2.3"
+                  data-date="2026-11-10"
+                  data-status="beta"
+                  data-type="patch"
+                  data-tags="changed internal-only"
+                >
+                  <details open>
+                    <summary>
+                      <span class="release-summary-version">v3.2.3</span>
+                      <span class="release-summary-date">2026-11-10</span>
+                    </summary>
+                    <div class="release-body">
+                      <div class="badge-row release-badges">
+                        <span class="pill">Version v3.2.3</span>
+                        <span class="pill">Beta</span>
+                        <span class="pill">Changed</span>
+                        <span class="pill">Internal-only</span>
+                      </div>
+                      <h3>Summary</h3>
+                      <p>
+                        Maintenance release. The website looks and works as before; behind the scenes
+                        it now follows the APES repository standards for local preview, versioning,
+                        releases and security checks.
+                      </p>
+                      <h3>Detailed changes</h3>
+                      <ul class="clean-list mini-list">
+                        <li>Footer version labels now read <code>v3.2.3</code>.</li>
+                        <li>Releases are published from a version tag and deployed with a checked, reversible deploy script.</li>
+                      </ul>
+                      <h3>Affected areas</h3>
+                      <ul class="clean-list mini-list">
+                        <li>Footer version labels and the Change Log Hub</li>
+                      </ul>
+                      <h3>Validation</h3>
+                      <ul class="clean-list mini-list">
+                        <li>Site checks and CI on the milestone pull request</li>
+                        <li>Laragon local preview of the home page, Support and this page</li>
+                      </ul>
+                    </div>
+                  </details>
+                </article>
+<article
+                  id="release-v322b"
+                  class="release-item"
+                  data-release-item
                   data-version="v3.2.2b"
                   data-date="2026-08-19"
                   data-status="beta"
@@ -934,7 +979,7 @@
               Public contact: <a class="js-protected-email" href="/contact/" data-user="info" data-domain="apes.org.uk" data-show-address="true" rel="nofollow">Email APES</a> &middot;
               <a href="tel:01744374015">01744 374 015</a>
             </p>
-            <p>Website version: <a href="../change-log-hub/index.html">MyAPES v3.2.2b</a></p>
+            <p>Website version: <a href="../change-log-hub/index.html">MyAPES v3.2.3</a></p>
           </div>
         </div>
       </footer>

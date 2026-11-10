@@ -1,68 +1,25 @@
+<!-- Title: v<version>: <milestone name>. One pull request per milestone, merged once as a merge commit. -->
+
+## Milestone
+
+`vX.Y.Z <milestone name>`
+
 ## Summary
 
 -
 
-## Issue
+## Issues
 
-- Issue decision:
-- Linked issue:
-- No-issue reason, if applicable:
+Closes #
 
-## Scope
+## Checks
 
-- Update type:
-- Website type:
-- In scope:
-- Out of scope:
+- [ ] `php scripts/check-site.php` passes
+- [ ] Changed pages checked in the Laragon preview (`scripts\preview.ps1`), desktop and mobile
+- [ ] SEO, sitemap, footer and error pages updated where pages changed
+- [ ] `php scripts/milestone-version bump vX.Y.Z` and the change log entry are the last commit (`chore: release vX.Y.Z`)
+- [ ] No secrets, credentials or personal data
 
-## Changes
+## Deploy
 
--
-
-## Validation
-
-- [ ] Repository guidance reviewed
-- [ ] Local tool discovery run or blocker recorded
-- [ ] Repository-supported checks run or blocker recorded
-- [ ] Secret/private-data review complete
-- [ ] Codex browser preview completed or blocker recorded, if relevant
-
-Validation notes:
-
-```text
-
-```
-
-## Release Records
-
-- README:
-- Root changelog:
-- Public changelog:
-- Version:
-- Change Log Hub:
-- Generated output:
-
-## Website and Hosting Impact
-
-- Public folder:
-- SEO:
-- Sitemap:
-- Footer:
-- Newsroom:
-- Error pages:
-- Cloudron LAMP:
-- UK GDPR:
-- Hosting/deployment:
-
-## Risks and Follow-Up
-
--
-
-## GitHub Status
-
-- Branch:
-- Base branch:
-- Push status:
-- Merge status:
-- Cleanup status:
-- Issue closure status:
+After the ship gate: tag `vX.Y.Z` on the merge commit, then `deploy/cloudron/deploy.ps1 -Tag vX.Y.Z`.

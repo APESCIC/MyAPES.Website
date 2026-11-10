@@ -5,6 +5,38 @@ for the MyAPES Website. Public-facing release details are maintained separately
 in [`public/CHANGELOG.md`](public/CHANGELOG.md) and presented through the
 [Change Log Hub](https://myapes.me.uk/change-log-hub/).
 
+## [3.2.3] - 2026-11-10
+
+Status: Beta (carried by the milestone title, `v3.2.3 Beta: Repo standards`)
+
+Change type: Patch
+
+Summary: Repository standards. Laragon is the only local set-up, versions come
+from the milestone version, each version ships once, and security checks use
+GitHub's free features only.
+
+Repository changes:
+
+- Laragon profile (`docs/laragon/`), `scripts/laragon-setup.ps1` and the live
+  preview gate `scripts/preview.ps1`, with Browsersync live reload on port 3101.
+  The `php -S` instructions are gone.
+- `scripts/milestone-version` (`next`, `bump`, `check-title`, `check-branch`,
+  `check-release`); `VERSION` is now plain semver (`3.2.3`).
+- `.cursor/rules/version-shipping.mdc`, the `complete-next-version` and
+  `release-version` skills, and a shorter `AGENTS.md`.
+- `deploy/cloudron/deploy.ps1 -Tag` with backup, swap, `/VERSION` check and
+  rollback; `release.yml` publishes the Release from the tag.
+- CI: site checks, PHP lint, PR title and branch checks, dependency review,
+  CodeQL and Dependabot into the `dependencies` branch.
+
+Release records:
+
+- Repository and public version: `3.2.3` (shown as `v3.2.3` in footers).
+
+Validation:
+
+- `php scripts/check-site.php`, CI on the milestone PR, and the Laragon preview
+  at `http://myapes-website.test`.
 ## v3.2.2b - 2026-08-19
 
 Status: Beta

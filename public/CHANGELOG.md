@@ -2,6 +2,28 @@
 
 All notable public-facing MyAPES changes are recorded here.
 
+## [3.2.3] - 2026-11-10
+
+Status: Beta
+
+Change type: Patch
+
+Summary: Maintenance release. The website looks and works as before; behind the scenes it now follows the APES repository standards for local preview, versioning, releases and security checks.
+
+Detailed changes:
+
+- Footer version labels now read `v3.2.3`.
+- Releases are published from a version tag and deployed with a checked, reversible deploy script.
+
+Affected areas:
+
+- Footer version labels and the Change Log Hub
+
+Version decision:
+
+- Previous version: v3.2.2b
+- New version: v3.2.3
+- Version type: patch; beta status is carried by the milestone title
 ## v3.2.2b - 2026-08-19
 
 Status: Beta

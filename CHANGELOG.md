@@ -5,6 +5,43 @@ for the MyAPES Website. Public-facing release details are maintained separately
 in [`public/CHANGELOG.md`](public/CHANGELOG.md) and presented through the
 [Change Log Hub](https://myapes.me.uk/change-log-hub/).
 
+## [3.2.4] - 2026-11-14
+
+Status: Beta (carried by the milestone title, `v3.2.4 Patch: Deploy and 404 fixes`)
+
+Change type: Patch
+
+Summary: Deploy and 404 fixes. Laravel Herd replaces Laragon for local
+development, missing pages return a real 404 status, and the deploy script
+reads the live version correctly.
+
+Repository changes:
+
+- Laravel Herd is the only local set-up (#18): `LocalValetDriver.php` and
+  `scripts/herd/router.php` copy the `public/.htaccess` clean URLs, 404 status
+  and security headers for Herd's nginx; `scripts/herd-setup.ps1` replaces
+  `scripts/laragon-setup.ps1`; `scripts/preview.ps1` checks Herd; `docs/herd/`
+  replaces `docs/laragon/`; `.cursor/rules/herd-local-dev.mdc` replaces
+  `laragon-local-dev.mdc`; Laragon is removed from the docs, skills and notes.
+- `AGENTS.md` follows the repo agent template, with Cursor's precedence
+  paragraph, workflow slots, deploy and health details, and gotchas.
+- `public/.htaccess` ends with `RewriteRule ^ - [R=404,L]` so `ErrorDocument`
+  serves the branded page with status 404; `public/404.html` uses root-relative
+  links and assets; `scripts/check-site.php` guards both (#17).
+- `deploy/cloudron/deploy.ps1` decodes the `/VERSION` byte body and adds
+  `-KeepLiveFiles` (#16).
+
+Release records:
+
+- Repository and public version: `3.2.4` (shown as `v3.2.4` in footers).
+
+Validation:
+
+- `php scripts/check-site.php`, CI on the milestone PR, and the Herd preview at
+  `http://myapes-website.test` (Browsersync on `http://localhost:3101`).
+- After the deploy: `https://myapes.me.uk/VERSION` shows `3.2.4` and a missing
+  page returns 404.
+
 ## [3.2.3] - 2026-11-10
 
 Status: Beta (carried by the milestone title, `v3.2.3 Beta: Repo standards`)

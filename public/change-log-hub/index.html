@@ -76,13 +76,13 @@
                 compliance changes and internal platform maintenance.
               </p>
               <div class="badge-row">
-                <span class="pill">Current version v3.2.3</span>
+                <span class="pill">Current version v3.2.4</span>
                 <span class="pill is-warm">Patch beta update</span>
-                <span class="pill">Repository standards</span>
+                <span class="pill">Deploy and 404 fixes</span>
               </div>
               <div class="hero-actions">
                 <a class="button button-secondary" href="#release-list">Expand all releases</a>
-                <a class="button button-secondary" href="#release-v323">View current release</a>
+                <a class="button button-secondary" href="#release-v324">View current release</a>
               </div>
             </section>
 
@@ -148,10 +148,60 @@
 
               <div id="release-list" class="release-list">
 <article
-                  id="release-v323"
+                  id="release-v324"
                   class="release-item"
                   data-release-item
                   data-current="true"
+                  data-version="v3.2.4"
+                  data-date="2026-11-14"
+                  data-status="beta"
+                  data-type="patch"
+                  data-tags="fixed public-facing seo internal-only"
+                >
+                  <details open>
+                    <summary>
+                      <span class="release-summary-version">v3.2.4</span>
+                      <span class="release-summary-date">2026-11-14</span>
+                    </summary>
+                    <div class="release-body">
+                      <div class="badge-row release-badges">
+                        <span class="pill">Version v3.2.4</span>
+                        <span class="pill">Beta</span>
+                        <span class="pill">Fixed</span>
+                        <span class="pill">Public-facing</span>
+                      </div>
+                      <h3>Summary</h3>
+                      <p>
+                        Deploy and 404 fixes. Pages that do not exist now return a real
+                        "not found" status, so search engines stop treating them as pages, and the
+                        branded "Page not found" page keeps its styling at any address.
+                      </p>
+                      <h3>Detailed changes</h3>
+                      <ul class="clean-list mini-list">
+                        <li>Missing pages return HTTP status 404 with the branded "Page not found" page, instead of 200.</li>
+                        <li>The "Page not found" page loads its styles and links correctly from any address.</li>
+                        <li>The deploy script reads the live version correctly and can keep files that exist only on the server.</li>
+                        <li>Local development moved to Laravel Herd, with the same page addresses and 404 behaviour as the live site.</li>
+                        <li>Footer version labels now read <code>v3.2.4</code>.</li>
+                      </ul>
+                      <h3>Affected areas</h3>
+                      <ul class="clean-list mini-list">
+                        <li>The "Page not found" page and every missing address</li>
+                        <li>Footer version labels and the Change Log Hub</li>
+                      </ul>
+                      <h3>Validation</h3>
+                      <ul class="clean-list mini-list">
+                        <li>Site checks and CI on the milestone pull request</li>
+                        <li>Laravel Herd local preview of the home page, Support, the sitemap and missing addresses</li>
+                        <li>Live check after the deploy: <code>/VERSION</code> shows 3.2.4 and a missing page returns 404</li>
+                      </ul>
+                    </div>
+                  </details>
+                </article>
+<article
+                  id="release-v323"
+                  class="release-item"
+                  data-release-item
                   data-version="v3.2.3"
                   data-date="2026-11-10"
                   data-status="beta"
@@ -979,7 +1029,7 @@
               Public contact: <a class="js-protected-email" href="/contact/" data-user="info" data-domain="apes.org.uk" data-show-address="true" rel="nofollow">Email APES</a> &middot;
               <a href="tel:01744374015">01744 374 015</a>
             </p>
-            <p>Website version: <a href="../change-log-hub/index.html">MyAPES v3.2.3</a></p>
+            <p>Website version: <a href="../change-log-hub/index.html">MyAPES v3.2.4</a></p>
           </div>
         </div>
       </footer>

@@ -58,8 +58,8 @@ For PHP/HTML editing in JetBrains IDEs:
 
 - Public release records: `public/CHANGELOG.md`
 - Change log hub page: `public/change-log-hub/index.html`
-- Site version: `public/VERSION` (`3.2.3`, shown as `v3.2.3`)
-- Repository version: `VERSION` (`3.2.3`)
+- Site version: `public/VERSION` (`3.2.4`, shown as `v3.2.4`)
+- Repository version: `VERSION` (`3.2.4`)
 
 ## Support and community
 

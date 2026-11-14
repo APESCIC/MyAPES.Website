@@ -2,6 +2,33 @@
 
 All notable public-facing MyAPES changes are recorded here.
 
+## [3.2.4] - 2026-11-14
+
+Status: Beta
+
+Change type: Patch
+
+Summary: Deploy and 404 fixes. Pages that do not exist now return a real "not found" status, so search engines stop treating them as pages, and the branded "Page not found" page keeps its styling at any address.
+
+Detailed changes:
+
+- Missing pages return HTTP status 404 with the branded "Page not found" page, instead of 200.
+- The "Page not found" page loads its styles and links correctly from any address.
+- The deploy script reads the live version correctly and can keep files that exist only on the server.
+- Local development moved to Laravel Herd, with the same page addresses and 404 behaviour as the live site.
+- Footer version labels now read `v3.2.4`.
+
+Affected areas:
+
+- The "Page not found" page and every missing address
+- Footer version labels and the Change Log Hub
+
+Version decision:
+
+- Previous version: v3.2.3
+- New version: v3.2.4
+- Version type: patch; beta status is carried by the milestone title
+
 ## [3.2.3] - 2026-11-10
 
 Status: Beta

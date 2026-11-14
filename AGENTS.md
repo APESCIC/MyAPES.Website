@@ -41,14 +41,14 @@ Laravel Herd (Pro, Windows) is the only supported local set-up. The live preview
 | Set up or repair | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\herd-setup.ps1` |
 | Profile | [docs/herd/profile.md](docs/herd/profile.md) (values in `docs/herd/profile.json`, read by both scripts) |
 
-- Put Herd first on `PATH` in agent shells: `$env:Path = "$env:USERPROFILE\.config\herd\bin;C:\Program Files\nodejs;$env:Path"`. Use `herd php` for PHP so it runs the site's 8.4.
+- Put Herd first on `PATH` in agent shells: `$env:Path = "$env:USERPROFILE\.config\herd\bin;C:\Program Files\nodejs;$env:Path"`. Run checks with `php84` (Herd's PHP 8.4 shim, for example `php84 scripts/check-site.php`): `herd php` uses the site's 8.4 but always exits 0, and plain `php` is Herd's global default (8.5).
 - `herd site:info myapes-website` shows the URL, path and PHP version; `herd which` (in the repo root) shows the driver, which should be `LocalValetDriver`.
 
 ## Tests and checks
 
 | Check | Command |
 | --- | --- |
-| Site checks | `php scripts/check-site.php` (also run by CI) |
+| Site checks | `php84 scripts/check-site.php` locally, `php scripts/check-site.php` in CI. Also checks the 404 rules in `.htaccess` and that `404.html` uses root-relative links |
 | PHP lint | `php -l public/template/layout.php` |
 | Local routes | `scripts\herd-setup.ps1` checks `/VERSION` and that a missing page is 404 |
 | CI workflows | `.github/workflows/` (`ci`, `milestone-version-check`, `dependency-review`, CodeQL, `release.yml`) |
@@ -109,6 +109,7 @@ Nothing reaches `main`, and nothing is tagged, released or deployed, before stag
 
 - 2026-11-14: Laravel Herd became the only local set-up, decided by Bambie ([#18](https://github.com/APESCIC/MyAPES.Website/issues/18)).
 - Herd serves with nginx, which ignores `public/.htaccess`, and its built-in static driver answers a missing page with `/index.html` and status 200. `LocalValetDriver.php` (repo root, never deployed) copies the `.htaccess` rules. Change both together.
+- `public/404.html` is served at the missing URL (Apache `ErrorDocument`, and the Herd driver), so its links and assets must be root-relative (`/assets/...`), unlike the other pages ([#17](https://github.com/APESCIC/MyAPES.Website/issues/17)).
 - `/VERSION` has no file extension, so `Invoke-WebRequest` returns its body as bytes; decode it before comparing ([#16](https://github.com/APESCIC/MyAPES.Website/issues/16)).
 - Quick check after domain changes: `rg -n "https://beta\.apes\.me\.uk" public` should return nothing.
 

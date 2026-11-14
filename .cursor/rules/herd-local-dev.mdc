@@ -20,9 +20,10 @@ Laravel Herd (Pro, Windows) is the only supported local set-up. Cursor's `live-p
 | Set up or repair | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\herd-setup.ps1` |
 | Live preview gate | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\preview.ps1` |
 | Browsersync live reload | `npm run dev` |
-| Site checks | `php scripts/check-site.php` |
+| Site checks | `php84 scripts/check-site.php` |
 | Version helper | `php scripts/milestone-version help` |
 
 - Put Herd first on `PATH` for agent shells: `$env:Path = "$env:USERPROFILE\.config\herd\bin;C:\Program Files\nodejs;$env:Path"`.
+- Run PHP checks with `php84` (keeps the exit code and matches Cloudron's 8.4). `herd php` always exits 0, and plain `php` is Herd's global default (8.5).
 - When you change rewrite rules or headers in `public/.htaccess`, change `LocalValetDriver.php` to match, and check the routes in the preview.
 - Profile values: `docs/herd/profile.json` (read by the scripts) and `docs/herd/profile.md`.

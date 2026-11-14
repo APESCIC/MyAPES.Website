@@ -24,7 +24,9 @@ ErrorDocument 404 /404.html
     RewriteRule ^(.+?)/?$ $1/index.php [L]
 
     RewriteRule ^$ index.html [L]
-    RewriteRule ^.*$ 404.html [L]
+
+    # Anything else is missing: ErrorDocument serves the branded page with status 404.
+    RewriteRule ^ - [R=404,L]
 </IfModule>
 
 <IfModule mod_headers.c>

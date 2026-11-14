@@ -1,7 +1,7 @@
 {
     "name": "myapes-website",
     "private": true,
-    "description": "MyAPES Website - Laragon live reload and checks",
+    "description": "MyAPES Website - Herd live reload and checks",
     "scripts": {
         "dev": "browser-sync start --proxy http://myapes-website.test --port 3101 --ui-port 3111 --files \"public/**/*\" --no-open --no-notify",
         "check": "php scripts/check-site.php"

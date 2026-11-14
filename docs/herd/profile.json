@@ -1,13 +1,12 @@
 {
-    "project": "myapes-website",
-    "site": "myapes-website.test",
+    "site": "myapes-website",
+    "host": "myapes-website.test",
     "appUrl": "http://myapes-website.test",
     "documentRoot": "public",
+    "driver": "LocalValetDriver.php",
     "php": "8.4",
-    "phpThreadSafe": false,
-    "apacheHandler": "fcgid",
     "database": null,
-    "node": "22",
+    "nodeMinimum": 22,
     "devServer": "browsersync",
     "devServerPort": 3101,
     "devServerUiPort": 3111

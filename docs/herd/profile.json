@@ -1,0 +1,13 @@
+{
+    "site": "myapes-website",
+    "host": "myapes-website.test",
+    "appUrl": "http://myapes-website.test",
+    "documentRoot": "public",
+    "driver": "LocalValetDriver.php",
+    "php": "8.4",
+    "database": null,
+    "nodeMinimum": 22,
+    "devServer": "browsersync",
+    "devServerPort": 3101,
+    "devServerUiPort": 3111
+}

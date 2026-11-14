@@ -32,7 +32,7 @@ final class SemVer
     }
 
     /**
-     * Reads the version from the start of a milestone title, e.g. "v0.58.3 Dev: Laragon local development".
+     * Reads the version from the start of a milestone title, e.g. "v3.2.4 Patch: Deploy and 404 fixes".
      */
     public static function fromMilestoneTitle(string $title): ?self
     {

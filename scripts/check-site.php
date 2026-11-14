@@ -2,7 +2,8 @@
 
 /*
  * Site checks run by CI and before every push: the VERSION files agree, every full HTML page under public/
- * declares a language and a title, the sitemap is valid XML, and the robots file and branded 404 page exist.
+ * declares a language and a title, the sitemap is valid XML, the robots file and branded 404 page exist, and
+ * missing pages get a real 404 status with a 404 page that works at any depth.
  * Needs only PHP.
  *
  * Usage: php scripts/check-site.php
@@ -29,6 +30,17 @@ if (is_file($public.'/sitemap.xml')) {
     if (simplexml_load_file($public.'/sitemap.xml') === false) {
         $problems[] = 'public/sitemap.xml is not valid XML: '.trim((string) (libxml_get_errors()[0]->message ?? 'unknown error'));
     }
+}
+
+$htaccess = (string) @file_get_contents($public.'/.htaccess');
+if (! preg_match('#^\s*ErrorDocument\s+404\s+/404\.html\s*$#mi', $htaccess)) {
+    $problems[] = 'public/.htaccess must set ErrorDocument 404 /404.html.';
+}
+if (preg_match('#^\s*RewriteRule\s+\S+\s+/?404\.html\b#mi', $htaccess)) {
+    $problems[] = 'public/.htaccess rewrites misses to 404.html, which returns status 200. End with RewriteRule ^ - [R=404,L] instead.';
+}
+if (is_file($public.'/404.html') && preg_match('#(href|src)="(?!/|https?:|mailto:|tel:|\#)#i', (string) file_get_contents($public.'/404.html'))) {
+    $problems[] = 'public/404.html must use root-relative links and assets: it is served at the missing URL, not at /404.html.';
 }
 
 $pages = 0;

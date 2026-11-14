@@ -4,7 +4,7 @@
 
 MyAPES public site is delivered as a **static HTML/CSS/JS website served from `public/`**.
 
-- Primary web root: `public/` (served locally from `C:\laragon\www\myapes-website\public`)
+- Primary web root: `public/` (served locally by Laravel Herd as `http://myapes-website.test`)
 - Public routes are static files (`index.html` and folder `index.html` pages).
 - `.htaccess` in `public/` keeps clean URLs and fallback 404 behavior for Apache.
 - No private application runtime is required for the public site in this repository snapshot.
@@ -21,19 +21,19 @@ The expected deployment target is the existing Cloudron LAMP pattern:
 
 ## Local preview and validation workflow
 
-Laragon is the only supported local set-up. Its Apache serves `public/` with the same `.htaccess` rules as Cloudron.
+Laravel Herd (Pro, Windows) is the only supported local set-up. Herd serves `public/` with nginx on PHP 8.4. nginx does not read `.htaccess`, so `LocalValetDriver.php` at the repo root (never deployed) copies its clean URLs, 404 page and security headers. Details: [docs/herd/profile.md](docs/herd/profile.md).
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\laragon-setup.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\herd-setup.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\preview.ps1
 ```
 
-The first links `C:\laragon\www\myapes-website` to your clone so Laragon serves `http://myapes-website.test`. The second pulls the latest changes and starts Browsersync on `http://localhost:3101/`, which reloads on save. Then check:
+The first links your clone in Herd as `http://myapes-website.test` and isolates it to PHP 8.4. The second pulls the latest changes, checks the site serves this clone, and starts Browsersync on `http://localhost:3101/`, which reloads on save. Then check:
 
 - `http://localhost:3101/`
 - `http://localhost:3101/support/`
 - `http://localhost:3101/sitemap.xml`
-- `http://localhost:3101/does-not-exist` (should resolve to the branded 404)
+- `http://localhost:3101/does-not-exist` (should return the branded 404 page with status 404)
 
 ### Quick checks
 
@@ -58,8 +58,8 @@ For PHP/HTML editing in JetBrains IDEs:
 
 - Public release records: `public/CHANGELOG.md`
 - Change log hub page: `public/change-log-hub/index.html`
-- Site version: `public/VERSION` (`3.2.3`, shown as `v3.2.3`)
-- Repository version: `VERSION` (`3.2.3`)
+- Site version: `public/VERSION` (`3.2.4`, shown as `v3.2.4`)
+- Repository version: `VERSION` (`3.2.4`)
 
 ## Support and community
 

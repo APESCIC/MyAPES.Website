@@ -161,7 +161,7 @@ function template_render_page_end(): void
     echo '<p>Association of Protecting Exotic Species CIC · CIC No: 16253848</p>';
     echo '<p>40 Morris Street, St Helens, Merseyside, WA9 3EN</p>';
     echo '<p>Public contact: <a class="js-protected-email" href="/contact/" data-user="info" data-domain="apes.org.uk" data-show-address="true" rel="nofollow">Email APES</a> · <a href="tel:01744374015">01744 374 015</a></p>';
-    echo '<p>Website version: <a href="/change-log-hub/">MyAPES v3.2.3</a></p>';
+    echo '<p>Website version: <a href="/change-log-hub/">MyAPES v3.2.4</a></p>';
     echo '</div>';
     echo '</div>';
     echo '</footer>';

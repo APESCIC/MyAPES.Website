@@ -62,12 +62,12 @@ $results = foreach ($tool in $tools) {
 
 $results | Format-Table -AutoSize
 
-$laragonPaths = @('C:\laragon', 'C:\Laragon') | Where-Object { Test-Path -LiteralPath $_ }
+$herdCli = Join-Path $env:USERPROFILE '.config\herd\bin\herd.bat'
 
 Write-Host ''
 Write-Host 'Local environment hints'
 [pscustomobject]@{
-    Laragon = if ($laragonPaths) { $laragonPaths -join '; ' } else { 'not found at common Windows paths' }
+    Herd = if (Test-Path -LiteralPath $herdCli) { $herdCli } else { 'not found; install Laravel Herd from https://herd.laravel.com/windows' }
 } | Format-List
 
 Write-Host 'Discovery is read-only. Missing tools are blockers unless the user approves installation.'

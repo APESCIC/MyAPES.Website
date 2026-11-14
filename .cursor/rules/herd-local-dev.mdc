@@ -1,0 +1,28 @@
+---
+description: Laravel Herd is the only local set-up - this repo's live preview gate values
+alwaysApply: true
+---
+
+# Laravel Herd local development
+
+Laravel Herd (Pro, Windows) is the only supported local set-up. Cursor's `live-preview-gate` and `herd-local-preview` skills own the gate steps; this rule gives this repo's values. Herd serves this clone as `http://myapes-website.test` from `public/`, on PHP 8.4 isolated to the site, and `LocalValetDriver.php` copies the `public/.htaccess` rules because Herd's nginx does not read them. Browsersync reloads the page on save. There is no database. Never use `file:///` as the preview.
+
+## Live preview gate values
+
+1. Run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\preview.ps1`. It merges `origin/main` into the milestone branch (never rebases or pushes), runs `npm ci` when the lock file changed, checks Herd is running and the site is linked to this clone on PHP 8.4, checks `http://myapes-website.test/VERSION` matches this checkout's `public/VERSION` and that a missing page returns 404, and starts Browsersync on port 3101.
+2. Exit 0: open `http://localhost:3101` (Browsersync, proxying `http://myapes-website.test`) in Cursor's browser. Exit 3: a decision is needed, ask with AskQuestion. Exit 1: a blocker, report it.
+3. If the site is not linked, run `scripts\herd-setup.ps1`. It links the clone as `myapes-website` and isolates it to PHP 8.4. Opening Herd or installing a PHP version needs Bambie: ask with AskQuestion.
+
+## Commands
+
+| Task | Command |
+| --- | --- |
+| Set up or repair | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\herd-setup.ps1` |
+| Live preview gate | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\preview.ps1` |
+| Browsersync live reload | `npm run dev` |
+| Site checks | `php scripts/check-site.php` |
+| Version helper | `php scripts/milestone-version help` |
+
+- Put Herd first on `PATH` for agent shells: `$env:Path = "$env:USERPROFILE\.config\herd\bin;C:\Program Files\nodejs;$env:Path"`.
+- When you change rewrite rules or headers in `public/.htaccess`, change `LocalValetDriver.php` to match, and check the routes in the preview.
+- Profile values: `docs/herd/profile.json` (read by the scripts) and `docs/herd/profile.md`.

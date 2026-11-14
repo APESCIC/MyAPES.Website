@@ -230,13 +230,14 @@ work. Use documented setup scripts, task definitions, CI-style commands, or
 repository guidance before inventing commands.
 
 Run `.codex/scripts/discover-local-dev-tools.ps1` where present to identify
-existing local tools such as Git, GitHub CLI, Node.js, PHP, Laragon and
+existing local tools such as Git, GitHub CLI, Node.js, PHP, Laravel Herd and
 browsers. Treat the inventory as read-only evidence, not permission to install
 missing tools, change settings, alter PATH or connect to protected services.
 
-Laragon is the only supported local set-up. Run the live preview gate,
-`scripts\preview.ps1`, before any change: it serves `http://myapes-website.test`
-from `public/` and starts Browsersync on `http://localhost:3101`. Inspect
+Laravel Herd is the only supported local set-up. Run the live preview gate,
+`scripts\preview.ps1`, before any change: it checks Herd serves
+`http://myapes-website.test` from `public/` and starts Browsersync on
+`http://localhost:3101`. Inspect
 affected routes there (Codex browser when available) and record route notes,
 screenshot status, and console or visible errors. If the preview cannot run,
 record the exact blocker. The root `AGENTS.md` and `.cursor/rules/` take

@@ -88,9 +88,10 @@ For APES CIC Cloudron LAMP work, assume:
 - Redis only where approved
 - Apache `.htaccess`
 
-Laragon is the only supported local set-up for this site. Run
+Laravel Herd is the only supported local set-up for this site. Run
 `scripts\preview.ps1` for the live preview gate (see
-`.cursor/rules/laragon-local-dev.mdc` and `docs/laragon/profile.md`).
+`.cursor/rules/herd-local-dev.mdc` and `docs/herd/profile.md`). Herd's nginx
+does not read `.htaccess`; `LocalValetDriver.php` copies its rules locally.
 
 ## Template Repository Note
 

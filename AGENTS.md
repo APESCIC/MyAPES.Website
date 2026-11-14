@@ -1,8 +1,20 @@
 # Agent instructions for MyAPES Website
 
-MyAPES Website (`https://myapes.me.uk`) is maintained by the Association of Protecting Exotic Species CIC (APES CIC). It is a static HTML, CSS and JavaScript website served from `public/`, with one PHP page template (`public/template/layout.php`). The owner is Bambie Murphy, Director. Write UK English (organisation, behaviour, colour, licence) in the site, docs, issues and pull requests.
+Cursor's user rules and skills set how work is done here (branches, issues, pull requests, merge, release, deploy, ship gate, decisions and safety). This file describes this repository and fills the named slots below. If anything here disagrees with them, Cursor's rules win and this file is corrected in the same milestone.
 
-This file is the source of truth for agents. How work ships is in [`.cursor/rules/version-shipping.mdc`](.cursor/rules/version-shipping.mdc) and local development in [`.cursor/rules/laragon-local-dev.mdc`](.cursor/rules/laragon-local-dev.mdc); this file points to them rather than repeating them.
+The owner is Bambie Murphy, Director. Write UK English (organisation, behaviour, colour, licence) in the site, docs, issues and pull requests. Never print, paste or commit secrets. Repo details for shipping are in [`.cursor/rules/version-shipping.mdc`](.cursor/rules/version-shipping.mdc) and for local development in [`.cursor/rules/herd-local-dev.mdc`](.cursor/rules/herd-local-dev.mdc).
+
+## About the app
+
+MyAPES Website (`https://myapes.me.uk`) is the public resource and tool hub of the Association of Protecting Exotic Species CIC (APES CIC). It signposts support, care resources, community spaces, updates and the separate MyAPES Account portal.
+
+- Repository: `APESCIC/MyAPES.Website`. Work only in this repository.
+
+## Stack and architecture
+
+- Static HTML, CSS and browser JavaScript served from `public/`, with one PHP page template (`public/template/layout.php`). No database and no build step for the deployed site.
+- `public/.htaccess` (Apache on Cloudron) handles clean URLs, the branded 404 page and security headers. Locally, `LocalValetDriver.php` and `scripts/herd/router.php` copy those rules for Herd's nginx (see Decisions and gotchas).
+- Node is used only for Browsersync live reload (`package.json`).
 
 ## Ground rules
 
@@ -12,19 +24,47 @@ This file is the source of truth for agents. How work ships is in [`.cursor/rule
 - Every Cloudron app is production. Read-only commands (status, logs) run freely. A deploy needs the ship-gate answer in the current chat. Any other change needs an AskQuestion answer with `Back up, then <change> (Recommended)` first. Don't change DNS or Cloudflare.
 - Security checks use GitHub's free features only: Dependabot (into the `dependencies` branch), dependency review and CodeQL. Don't add paid or third-party scanners.
 
-## Local development (Laragon)
+## Local development and preview
 
-Laragon is the only supported local set-up; never suggest `php -S`, XAMPP, WAMP, containers or virtual machines. Run the live preview gate before any change: `scripts\preview.ps1`, then open the preview in Cursor's browser and say "Preview ready, starting work". Full steps: [`laragon-local-dev.mdc`](.cursor/rules/laragon-local-dev.mdc).
+Laravel Herd (Pro, Windows) is the only supported local set-up. The live preview gate follows Cursor's `live-preview-gate` skill; this repo's preview command is `scripts\preview.ps1`. Repo details: [`herd-local-dev.mdc`](.cursor/rules/herd-local-dev.mdc).
 
 | Item | Value |
 | --- | --- |
-| Site | `http://myapes-website.test`, served by Laragon's Apache from `public/` through the junction `C:\laragon\www\myapes-website` |
-| Live reload | `npm run dev`: Browsersync on `http://localhost:3101` |
-| PHP | Laragon's PHP 8.4 NTS through FastCGI, as on Cloudron (8.4). Only `.php` files use it |
+| Clone | `C:\Users\BambieMurphy\Documents\GitHub\MyAPES.Website` |
+| Herd site | `myapes-website` (linked; PHP 8.4 isolated, as on Cloudron) |
+| Preview URL | `http://myapes-website.test` (HTTP, not secured) |
+| Preview command | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\preview.ps1` |
+| Live reload | `npm run dev`: Browsersync on `http://localhost:3101` (UI 3111), proxying the Herd site. Open this one in Cursor's browser |
+| Env file | None |
 | Database | None, so there is no demo seeder |
-| Set up or repair | `scripts\laragon-setup.ps1` |
+| Mail | None |
+| Set up or repair | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\herd-setup.ps1` |
+| Profile | [docs/herd/profile.md](docs/herd/profile.md) (values in `docs/herd/profile.json`, read by both scripts) |
+
+- Put Herd first on `PATH` in agent shells: `$env:Path = "$env:USERPROFILE\.config\herd\bin;C:\Program Files\nodejs;$env:Path"`. Use `herd php` for PHP so it runs the site's 8.4.
+- `herd site:info myapes-website` shows the URL, path and PHP version; `herd which` (in the repo root) shows the driver, which should be `LocalValetDriver`.
+
+## Tests and checks
+
+| Check | Command |
+| --- | --- |
 | Site checks | `php scripts/check-site.php` (also run by CI) |
-| Profile | [docs/laragon/profile.md](docs/laragon/profile.md) |
+| PHP lint | `php -l public/template/layout.php` |
+| Local routes | `scripts\herd-setup.ps1` checks `/VERSION` and that a missing page is 404 |
+| CI workflows | `.github/workflows/` (`ci`, `milestone-version-check`, `dependency-review`, CodeQL, `release.yml`) |
+
+## Workflow slots
+
+Shipping follows Cursor's `github-milestone-completion` and `ship-gate` skills. This repo fills these slots:
+
+| Slot | Value |
+| --- | --- |
+| Milestone branch pattern | `milestone/v<MAJOR>-<MINOR>-<PATCH>-<slug>`, printed by `php scripts/milestone-version next` |
+| Version files | `VERSION`, `public/VERSION` and the footers in `scripts/MilestoneVersion/fields.json`, set by `php scripts/milestone-version bump vX.Y.Z` |
+| Release tooling | Push the `vX.Y.Z` tag; `release.yml` publishes the Release |
+| Release history | `CHANGELOG.md`, `public/CHANGELOG.md` and `public/change-log-hub/index.html` |
+| Area labels | None |
+| Issue title prefix | `[Type] Short title` |
 
 ## Shipping and versioning
 
@@ -50,20 +90,33 @@ Nothing reaches `main`, and nothing is tagged, released or deployed, before stag
 - Title `[Type] Short title`, where the type is `Epic`, `Story`, `Task`, `Bug`, `Chore` or `Spike`.
 - Post progress with the `github-closeout` scripts (`Add-IssueUpdate.ps1`): Started, Decision, Blocked, Split and Committed.
 
-## Hosting
+## Deploy and health
 
 | Item | Value |
 | --- | --- |
-| App | Cloudron LAMP app `f2c75d19-8d3b-4206-a4f5-93f4a21caad9` |
+| Target | Cloudron LAMP app |
+| Cloudron app ID | `f2c75d19-8d3b-4206-a4f5-93f4a21caad9` |
 | Domain | `https://myapes.me.uk` |
 | Web root | `/app/data/public` (PHP 8.4, set by `/app/data/PHP_VERSION`) |
-| Deploy | `deploy/cloudron/deploy.ps1 -Tag vX.Y.Z`: backup, upload the tag's `public/`, swap, check `/VERSION`, roll back on failure |
+| Deploy command | `deploy/cloudron/deploy.ps1 -Tag vX.Y.Z`: backup, upload the tag's `public/`, swap, check `/VERSION`, roll back on failure. `-KeepLiveFiles` keeps live-only files; `-AllowRemovals` drops them |
+| Deploys | The release tag (never a branch) |
+| Auto-deploy couplings | None: merging or releasing does not deploy |
+| Health URL | `https://myapes.me.uk/VERSION` |
+| Version field | The whole body, for example `3.2.4` (served as `application/octet-stream`, so decode bytes) |
+| Secrets live in | The local `cloudron` CLI login only |
 
-## Site specifics
+## Decisions and gotchas
 
-- Most pages are static `index.html` folders; `public/template/layout.php` is the PHP page template.
-- `.agents/` and `.codex/` hold Codex prompts and skills. This file and `.cursor/rules/` take precedence over them.
+- 2026-11-14: Laravel Herd became the only local set-up, decided by Bambie ([#18](https://github.com/APESCIC/MyAPES.Website/issues/18)).
+- Herd serves with nginx, which ignores `public/.htaccess`, and its built-in static driver answers a missing page with `/index.html` and status 200. `LocalValetDriver.php` (repo root, never deployed) copies the `.htaccess` rules. Change both together.
+- `/VERSION` has no file extension, so `Invoke-WebRequest` returns its body as bytes; decode it before comparing ([#16](https://github.com/APESCIC/MyAPES.Website/issues/16)).
 - Quick check after domain changes: `rg -n "https://beta\.apes\.me\.uk" public` should return nothing.
+
+## Where to find things
+
+- Most pages are static `index.html` folders; `public/template/layout.php` is the PHP page template; `public/404.html` is the branded error page.
+- Local set-up: [docs/herd/profile.md](docs/herd/profile.md). Deploy: [deploy/cloudron/deploy.ps1](deploy/cloudron/deploy.ps1). Version helper: `php scripts/milestone-version help`.
+- `.agents/` and `.codex/` hold Codex prompts and skills. This file and `.cursor/rules/` take precedence over them.
 
 # Website standards
 
@@ -354,7 +407,7 @@ Required Cloudron LAMP checks before completion:
 10. UK GDPR, consent, retention, security, and audit implications are noted for forms or stored personal data.
 11. README, changelog, Change Log Hub, version records, generated output, and issue updates reflect the hosting impact.
 12. Local preview remains aligned with Cloudron LAMP assumptions.
-13. The changed pages have been checked in the Laragon preview (`http://myapes-website.test`, or Browsersync on `http://localhost:3101`).
+13. The changed pages have been checked in the Herd preview (`http://myapes-website.test`, or Browsersync on `http://localhost:3101`).
 14. Direct `file:///` access has been checked for browser served static pages and public assets where applicable, or a justified server required blocker has been recorded.
 
 ## Security, safety, and UK GDPR rules

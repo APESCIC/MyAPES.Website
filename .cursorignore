@@ -1,0 +1,18 @@
+# Secrets and credentials
+.env
+.env.*
+**/.env
+**/.env.*
+**/credentials.txt
+**/*credentials*.txt
+**/*.pem
+**/*.key
+
+# Dependencies and generated output
+node_modules/
+dist/
+
+# Local / OS noise
+.DS_Store
+Thumbs.db
+*.log

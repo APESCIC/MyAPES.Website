@@ -1,11 +1,11 @@
 ---
-description: How every milestone is versioned, named, worked and shipped - once, by its version number
+description: Milestone versioning, naming and ship-once flow for MyAPES Website
 alwaysApply: true
 ---
 
 # Version shipping
 
-This is the one rule for how work ships in this repository. `AGENTS.md`, `CONTRIBUTING.md`, the `complete-next-version` and `release-version` skills and the `/complete-next-version` command point here.
+This is the one rule for how work ships in this repository. Slot values and overview live in `AGENTS.md`; `CONTRIBUTING.md`, the `complete-next-version` and `release-version` skills and `/complete-next-version` point here for the detailed flow.
 
 ## The version
 

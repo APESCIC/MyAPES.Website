@@ -1,11 +1,11 @@
 ---
-description: Laravel Herd is the only local set-up - this repo's live preview gate values
+description: MyAPES Website Herd preview gate values (slots for live-preview-gate)
 alwaysApply: true
 ---
 
 # Laravel Herd local development
 
-Laravel Herd (Pro, Windows) is the only supported local set-up. Cursor's `live-preview-gate` and `herd-local-preview` skills own the gate steps; this rule gives this repo's values. Herd serves this clone as `http://myapes-website.test` from `public/`, on PHP 8.4 isolated to the site, and `LocalValetDriver.php` copies the `public/.htaccess` rules because Herd's nginx does not read them. Browsersync reloads the page on save. There is no database. Never use `file:///` as the preview.
+Repo-specific preview slots only. Durable facts live in `AGENTS.md`. Cursor's `live-preview-gate` and `herd-local-preview` skills own the gate steps. Laravel Herd is the only local stack. Herd serves this clone as `http://myapes-website.test` from `public/` on PHP 8.4; `LocalValetDriver.php` copies `public/.htaccess` (nginx ignores it). Browsersync reloads on save. No database. Never use `file:///` as the preview.
 
 ## Live preview gate values
 

@@ -83,7 +83,7 @@ Repo shipping rule: [`.cursor/rules/version-shipping.mdc`](.cursor/rules/version
 | Cloudron app ID | `f2c75d19-8d3b-4206-a4f5-93f4a21caad9` |
 | Domain | `https://myapes.me.uk` |
 | Web root | `/app/data/public` (PHP 8.4, set by `/app/data/PHP_VERSION`) |
-| Deploy command | `deploy/cloudron/deploy.ps1 -Tag vX.Y.Z`: backup, upload the tag's `public/`, swap, check `/VERSION`, roll back on failure. `-KeepLiveFiles` keeps live-only files; `-AllowRemovals` drops them |
+| Deploy command | `gh workflow run deploy-cloudron.yml -f tag=vX.Y.Z` (break-glass: `deploy/cloudron/deploy.ps1 -Tag vX.Y.Z`) |
 | Deploys | The release tag (never a branch) |
 | Auto-deploy couplings | None: merging or releasing does not deploy |
 | Health URL | `https://myapes.me.uk/VERSION` |
